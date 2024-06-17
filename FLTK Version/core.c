@@ -1,28 +1,77 @@
-#include <stdio.h>  
-#include <stdlib.h> 
+// C program for the above approach
+#include <stdio.h>
+#include <string.h>
 
-// Function prototypes (if any)
-void exampleFunction();
+// Driver Code
+int main()
+{
+	// Substitute the full file path
+	// for the string file_path
+	FILE* fp = fopen("Passwords.csv", "r");
 
-int main(int argc, char *argv[]) {
-    // Initialize variables
-    int exampleVariable = 0;
+	if (!fp)
+		printf("Can't open file\n");
 
-    // Display a welcome message
-    printf("Welcome to the C program template!\n");
+	else {
+		// Here we have taken size of
+		// array 1024 you can modify it
+		char buffer[1024];
 
-    // Call an example function
-    exampleFunction();
+		int row = 0;
+		int column = 0;
 
-    // Main program logic
-    // Add your code here
+		while (fgets(buffer,1024, fp)) {
+			column = 0;
+			row++;
 
-    // Exit the program
-    return 0;
-}
+			// To avoid printing of column
+			// names in file can be changed
+			// according to need
+			if (row == 1)
+				continue;
 
-// Example function definition
-void exampleFunction() {
-    printf("This is an example function.\n");
-    // Add function logic here
+			// Splitting the data
+			char* value = strtok(buffer, ",");
+            
+			while (value) {
+                
+				// Column 1
+				if (column == 0) {
+					printf("title :");
+				}
+
+				// Column 2
+				if (column == 1) {
+					printf("\tURL. :");
+				}
+
+				// Column 3
+				if (column == 2) {
+					printf("\tUsername :");
+				}
+
+                if (column == 3) {
+					printf("\tPassword :");
+				}
+
+                if (column == 4) {
+					printf("\tNotes :");
+				}
+
+                if (column == 5) {
+					printf("\tOTP :");
+				}
+
+				printf("%s", value);
+				value = strtok(NULL, ",");
+				column++;
+			}
+
+			printf("\n");
+		}
+
+		// Close the file
+		fclose(fp);
+	}
+	return 0;
 }
